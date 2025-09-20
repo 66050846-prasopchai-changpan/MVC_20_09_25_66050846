@@ -244,6 +244,30 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="year" class="form-label">
+                                    <i class="bi bi-calendar"></i> ชั้นปี
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="year" 
+                                       name="year" 
+                                       value="<%= student.year %>"
+                                       placeholder="เช่น มัธยมศึกษาปีที่ 4">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="status" class="form-label">
+                                    <i class="bi bi-info-circle"></i> สถานะ
+                                </label>
+                                <select class="form-select" id="status" name="status">
+                                    <option value="active" <%= student.status === 'active' ? 'selected' : '' %>>กำลังศึกษา</option>
+                                    <option value="graduated" <%= student.status === 'graduated' ? 'selected' : '' %>>จบการศึกษา</option>
+                                    <option value="inactive" <%= student.status === 'inactive' ? 'selected' : '' %>>ไม่ระบุ</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="row mt-4">
                             <div class="col-12">
                                 <div class="alert alert-warning">

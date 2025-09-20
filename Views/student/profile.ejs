@@ -60,24 +60,20 @@
                                         <td><%= student.fullName %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold bg-light">ชื่อเล่น</td>
-                                        <td><%= student.nickname || '-' %></td>
-                                    </tr>
-                                    <tr>
                                         <td class="fw-bold bg-light">อีเมล</td>
                                         <td><%= student.email || '-' %></td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td class="fw-bold bg-light">เบอร์โทร</td>
                                         <td><%= student.phone || '-' %></td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td class="fw-bold bg-light">หลักสูตร</td>
                                         <td><%= student.curriculumId %></td>
                                     </tr>
                                     <tr>
-                                        <td class="fw-bold bg-light">ชั้นปี</td>
-                                        <td><%= student.year %></td>
+                                    <td class="fw-bold bg-light">ชั้นปี</td>
+                                        <td><%= student.year || 'ไม่ระบุ' %></td>
                                     </tr>
                                     <tr>
                                         <td class="fw-bold bg-light">สถานะ</td>

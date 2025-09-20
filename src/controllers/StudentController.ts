@@ -36,7 +36,7 @@ export class StudentController {
         error: { status: 404 }
       });
       return;
-    }
+   }
 
     // ดึงวิชาที่ลงทะเบียนแล้ว
     const registeredSubjects = this.registrationService.getRegistrationsByStudent(user.studentId);
@@ -55,12 +55,14 @@ export class StudentController {
       };
     });
 
+    student.fullName = `${student.firstName} ${student.lastName}`; // รวม firstName และ lastName
+
     res.render('student/profile', {
-      title: 'ข้อมูลส่วนตัว',
-      user: user,
-      student: student,
-      registeredSubjects: registeredSubjectsWithDetails,
-      totalCredits: totalCredits
+        title: 'ข้อมูลส่วนตัว',
+        user: user,
+        student: student,
+        totalCredits: totalCredits,
+        registeredSubjects: registeredSubjectsWithDetails
     });
   };
 

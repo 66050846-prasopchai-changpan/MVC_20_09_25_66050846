@@ -8,6 +8,7 @@ export interface Student {
   school: string;           // โรงเรียนปัจจุบัน
   email: string;            // อีเมลที่ใช้ติดต่อ
   curriculumId: string;     // รหัสหลักสูตรที่ลงทะเบียน
+  fullName?: string;        // เพิ่ม fullName เพื่อรวม firstName และ lastName
 }
 
 // ฟังก์ชันช่วยคำนวณอายุ
