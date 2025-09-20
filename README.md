@@ -13,20 +13,20 @@
 - Authentication: ระบบล็อกอินง่าย ๆ
 
 ## โครงสร้าง MVC
-### Model (โมเดล)
+### Model
 - `Student.ts` -> จัดเก็บข้อมูลนักเรียน
 - `Subject.ts` -> จัดเก็บข้อมูลรายวิชา
 - `SubjectStructure.ts` -> จัดเก็บโครงสร้างหลักสูตร
 - `RegisteredSubject.ts` -> จัดเก็บการลงทะเบียนและเกรด
 - `User.ts` -> จัดเก็บข้อมูลผู้ใช้ระบบ
 
-### View (วิว)
+### View
 - หน้ารวมนักเรียน (สำหรับแอดมิน)
 - หน้าประวัตินักเรียน
 - หน้าลงทะเบียนเรียน
 - หน้ากรอกเกรด (สำหรับแอดมิน)
 
-### Controller (คอนโทรลเลอร์)
+### Controller
 - `AuthController.ts` -> จัดการระบบ login/logout
 - `StudentController.ts` -> จัดการข้อมูลนักเรียน
 - `SubjectController.ts` -> จัดการข้อมูลรายวิชา
