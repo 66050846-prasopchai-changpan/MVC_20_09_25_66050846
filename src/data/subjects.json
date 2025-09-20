@@ -1,0 +1,94 @@
+[
+  {
+    "subjectId": "05500001",
+    "subjectName": "การเขียนโปรแกรมคอมพิวเตอร์",
+    "credits": 3,
+    "instructor": "ผศ.ดร.วิศวะ นาคะศิริ",
+    "schedule": "จันทร์ 08:00-10:00, พุธ 08:00-10:00",
+    "room": "LAB301"
+  },
+  {
+    "subjectId": "05500002",
+    "subjectName": "โครงสร้างข้อมูลและอัลกอริทึม",
+    "credits": 3,
+    "instructor": "รศ.ดร.สมชาย นำสุวรรณชัย",
+    "prerequisiteId": "05500001",
+    "schedule": "อังคาร 13:00-15:00, ศุกร์ 13:00-15:00",
+    "room": "LAB302"
+  },
+  {
+    "subjectId": "05500003",
+    "subjectName": "คณิตศาสตร์ดิสครีต",
+    "credits": 3,
+    "instructor": "อ.ดร.พิมพ์ใจ รักการเรียน",
+    "schedule": "พฤหัสบดี 09:00-12:00",
+    "room": "SC201"
+  },
+  {
+    "subjectId": "05500004",
+    "subjectName": "ระบบฐานข้อมูล",
+    "credits": 3,
+    "instructor": "ผศ.ดร.อนุชา สร้างสรรค์",
+    "prerequisiteId": "05500002"
+  },
+  {
+    "subjectId": "05500005",
+    "subjectName": "การออกแบบและวิเคราะห์ระบบ",
+    "credits": 3,
+    "instructor": "อ.ดร.สุรีย์ พัฒนาการ"
+  },
+  {
+    "subjectId": "05500006",
+    "subjectName": "เครือข่ายคอมพิวเตอร์",
+    "credits": 3,
+    "instructor": "ผศ.ดร.นิรันดร์ เชื่อมโยง"
+  },
+  {
+    "subjectId": "90690001",
+    "subjectName": "ภาษาอังกฤษเพื่อการสื่อสาร",
+    "credits": 3,
+    "instructor": "อ.สุนิสา แสงแก้ว",
+    "schedule": "จันทร์ 13:00-15:00, พุธ 13:00-15:00",
+    "room": "LA205"
+  },
+  {
+    "subjectId": "90690002",
+    "subjectName": "คณิตศาสตร์พื้นฐาน",
+    "credits": 3,
+    "instructor": "อ.ดร.วิทยา คำนวณ",
+    "schedule": "อังคาร 08:00-10:00, ศุกร์ 08:00-10:00",
+    "room": "SC102"
+  },
+  {
+    "subjectId": "90690003",
+    "subjectName": "ฟิสิกส์พื้นฐาน",
+    "credits": 3,
+    "instructor": "อ.ดร.สมพงษ์ แสงโซล่า"
+  },
+  {
+    "subjectId": "90690004",
+    "subjectName": "การคิดเชิงระบบ",
+    "credits": 3,
+    "instructor": "อ.ดร.ปรีชา ใจดี"
+  },
+  {
+    "subjectId": "05500007",
+    "subjectName": "การพัฒนาเว็บแอปพลิเคชัน",
+    "credits": 3,
+    "instructor": "อ.ดร.ธนากร เว็บมาสเตอร์",
+    "prerequisiteId": "05500001"
+  },
+  {
+    "subjectId": "05500008",
+    "subjectName": "ปัญญาประดิษฐ์เบื้องต้น",
+    "credits": 3,
+    "instructor": "ผศ.ดร.สมารถ หุ่นยนต์"
+  },
+  {
+    "subjectId": "05500234",
+    "subjectName": "TestMVC",
+    "credits": 6,
+    "instructor": "Test er",
+    "prerequisiteId": "05500001"
+  }
+]

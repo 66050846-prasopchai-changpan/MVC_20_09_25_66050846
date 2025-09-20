@@ -1,0 +1,100 @@
+[
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "05500001",
+    "semester": 1
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "90690001",
+    "semester": 1
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "90690002",
+    "semester": 1
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "05500003",
+    "semester": 1
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "05500002",
+    "semester": 2
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "90690003",
+    "semester": 2
+  },
+  {
+    "curriculumId": "12345678",
+    "curriculumName": "วิทยาการคอมพิวเตอร์",
+    "departmentName": "ภาควิชาวิทยาการคอมพิวเตอร์",
+    "requiredSubjectId": "05500005",
+    "semester": 2
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "05500001",
+    "semester": 1
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "90690002",
+    "semester": 1
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "90690004",
+    "semester": 1
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "05500006",
+    "semester": 1
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "05500002",
+    "semester": 2
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "05500004",
+    "semester": 2
+  },
+  {
+    "curriculumId": "87654321",
+    "curriculumName": "วิศวกรรมซอฟต์แวร์",
+    "departmentName": "ภาควิชาวิศวกรรมคอมพิวเตอร์",
+    "requiredSubjectId": "90690001",
+    "semester": 2
+  }
+]

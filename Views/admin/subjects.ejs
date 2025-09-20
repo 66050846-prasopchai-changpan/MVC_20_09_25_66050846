@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบลงทะเบียนเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Sarabun', sans-serif;
+        }
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .btn {
+            border-radius: 10px;
+        }
+        .alert {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="bi bi-gear-fill me-2"></i>
+                ระบบจัดการข้อมูล
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="bi bi-house-fill"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/students">
+                            <i class="bi bi-people-fill"></i> จัดการนักเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/subjects">
+                            <i class="bi bi-book-fill"></i> จัดการวิชาเรียน
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <%= user.fullName %>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard">
+                                <i class="bi bi-house"></i> ไปหน้าหลัก
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1 class="text-center mb-4">
+                        <i class="bi bi-book-fill text-success"></i>
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- แสดงข้อความ -->
+            <% if (message) { %>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check-circle-fill"></i> <%= message %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <% if (error) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> <%= error %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- ปุ่มเพิ่มวิชาใหม่ -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <a href="/admin/subjects/add" class="btn btn-success btn-lg">
+                        <i class="bi bi-plus-circle"></i> เพิ่มวิชาใหม่
+                    </a>
+                </div>
+            </div>
+
+            <!-- ตารางแสดงรายการวิชา -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-list-ul"></i> รายการวิชาเรียนทั้งหมด
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <% if (subjects && subjects.length > 0) { %>
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>รหัสวิชา</th>
+                                        <th>ชื่อวิชา</th>
+                                        <th class="text-center">หน่วยกิต</th>
+                                        <th>อาจารย์ผู้สอน</th>
+                                        <th>วิชาพื้นฐาน</th>
+                                        <th class="text-center">จัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% subjects.forEach(subject => { %>
+                                        <tr>
+                                            <td><strong><%= subject.subjectId %></strong></td>
+                                            <td><%= subject.subjectName %></td>
+                                            <td class="text-center">
+                                                <span class="badge bg-primary"><%= subject.credits %></span>
+                                            </td>
+                                            <td><%= subject.instructor %></td>
+                                            <td>
+                                                <% if (subject.prerequisiteId) { %>
+                                                    <span class="badge bg-warning text-dark">
+                                                        <%= subject.prerequisiteId %>
+                                                    </span>
+                                                <% } else { %>
+                                                    <span class="text-muted">ไม่มี</span>
+                                                <% } %>
+                                            </td>
+                                            <td class="text-center">
+                                                <div class="btn-group" role="group">
+                                                    <a href="/admin/grades/subject/<%= subject.subjectId %>" 
+                                                       class="btn btn-sm btn-success" title="กรอกเกรด">
+                                                        <i class="bi bi-award"></i> กรอกเกรด
+                                                    </a>
+                                                    <a href="/admin/subjects/edit/<%= subject.subjectId %>" 
+                                                       class="btn btn-sm btn-warning">
+                                                        <i class="bi bi-pencil-square"></i> แก้ไข
+                                                    </a>
+                                                    <button type="button" 
+                                                            class="btn btn-sm btn-danger"
+                                                            onclick="confirmDelete('<%= subject.subjectId %>', '<%= subject.subjectName %>')">
+                                                        <i class="bi bi-trash"></i> ลบ
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    <% }); %>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <p class="text-muted">
+                                    <i class="bi bi-info-circle"></i> 
+                                    แสดงวิชาเรียนทั้งหมด <%= subjects.length %> วิชา
+                                </p>
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="text-center py-5">
+                            <i class="bi bi-inbox display-1 text-muted"></i>
+                            <h4 class="text-muted mt-3">ยังไม่มีข้อมูลวิชาเรียน</h4>
+                            <p class="text-muted">เริ่มต้นด้วยการเพิ่มวิชาใหม่</p>
+                            <a href="/admin/subjects/add" class="btn btn-success">
+                                <i class="bi bi-plus-circle"></i> เพิ่มวิชาใหม่
+                            </a>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal ยืนยันการลบ -->
+    <div class="modal fade" id="deleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-exclamation-triangle text-danger"></i>
+                        ยืนยันการลบวิชา
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>คุณต้องการลบวิชา <strong id="subjectName"></strong> หรือไม่?</p>
+                    <p class="text-danger">
+                        <i class="bi bi-warning"></i>
+                        การดำเนินการนี้ไม่สามารถย้อนกลับได้
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle"></i> ยกเลิก
+                    </button>
+                    <form id="deleteForm" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">
+                            <i class="bi bi-trash"></i> ลบวิชา
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function confirmDelete(subjectId, subjectName) {
+            document.getElementById('subjectName').textContent = subjectName;
+            document.getElementById('deleteForm').action = '/admin/subjects/delete/' + subjectId;
+            
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            deleteModal.show();
+        }
+    </script>
+</body>
+</html>

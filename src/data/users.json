@@ -1,0 +1,119 @@
+[
+  {
+    "id": "1",
+    "username": "admin",
+    "password": "admin123",
+    "role": "admin",
+    "fullName": "ผู้ดูแลระบบ"
+  },
+  {
+    "id": "2",
+    "username": "teacher01",
+    "password": "teacher123",
+    "role": "teacher",
+    "fullName": "อาจารย์สมชาย ใจดี"
+  },
+  {
+    "id": "3",
+    "username": "teacher02",
+    "password": "teacher123",
+    "role": "teacher",
+    "fullName": "อาจารย์สมหญิง รักเรียน"
+  },
+  {
+    "id": "101",
+    "username": "69000001",
+    "password": "69000001",
+    "role": "student",
+    "fullName": "ชัยวัฒน์ พงศ์สุระ",
+    "studentId": "69000001"
+  },
+  {
+    "id": "102",
+    "username": "69000002",
+    "password": "69000002",
+    "role": "student",
+    "fullName": "นายบุญมี บุญจริง",
+    "studentId": "69000002"
+  },
+  {
+    "id": "103",
+    "username": "69000003",
+    "password": "69000003",
+    "role": "student",
+    "fullName": "นางสาวจิรา จิรกิจ",
+    "studentId": "69000003"
+  },
+  {
+    "id": "104",
+    "username": "69000004",
+    "password": "69000004",
+    "role": "student",
+    "fullName": "นายดิสกรีต ประกอบ",
+    "studentId": "69000004"
+  },
+  {
+    "id": "105",
+    "username": "69000005",
+    "password": "69000005",
+    "role": "student",
+    "fullName": "นางสาวเอื้อมพร ช่วยคน",
+    "studentId": "69000005"
+  },
+  {
+    "id": "106",
+    "username": "69000006",
+    "password": "69000006",
+    "role": "student",
+    "fullName": "นายฟ้าใส สว่างแจ้ง",
+    "studentId": "69000006"
+  },
+  {
+    "id": "107",
+    "username": "69000007",
+    "password": "69000007",
+    "role": "student",
+    "fullName": "นางสาวกมลวรรณ ตั้งใจ",
+    "studentId": "69000007"
+  },
+  {
+    "id": "108",
+    "username": "69000008",
+    "password": "69000008",
+    "role": "student",
+    "fullName": "นายหาญ กล้าหาญ",
+    "studentId": "69000008"
+  },
+  {
+    "id": "109",
+    "username": "69000009",
+    "password": "69000009",
+    "role": "student",
+    "fullName": "นางสาวอิสรา เสรีภาพ",
+    "studentId": "69000009"
+  },
+  {
+    "id": "111",
+    "username": "69000011",
+    "password": "69000011",
+    "role": "student",
+    "fullName": "นางสาวขวัญใจ รักษ์ดี",
+    "studentId": "69000011"
+  },
+  {
+    "id": "112",
+    "username": "69000012",
+    "password": "69000012",
+    "role": "student",
+    "fullName": "นายลิขิต ใจศรี",
+    "studentId": "69000012"
+  },
+  {
+    "id": "1758355365705",
+    "username": "69000222",
+    "password": "69000222",
+    "role": "student",
+    "fullName": "Test Test",
+    "studentId": "69000222"
+  }
+]

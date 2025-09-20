@@ -1,0 +1,58 @@
+[
+  {
+    "id": "1",
+    "studentId": "69000001",
+    "subjectId": "05500001",
+    "registeredAt": "2024-08-15T10:00:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "2",
+    "studentId": "69000001",
+    "subjectId": "05500002",
+    "registeredAt": "2024-08-15T10:05:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "3",
+    "studentId": "69000002",
+    "subjectId": "05500001",
+    "registeredAt": "2024-08-15T10:10:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "4",
+    "studentId": "69000002",
+    "subjectId": "05500003",
+    "registeredAt": "2024-08-15T10:15:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "5",
+    "studentId": "69000003",
+    "subjectId": "05500001",
+    "registeredAt": "2024-08-15T10:20:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "6",
+    "studentId": "69000003",
+    "subjectId": "05500002",
+    "registeredAt": "2024-08-15T10:25:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "7",
+    "studentId": "69000004",
+    "subjectId": "05500001",
+    "registeredAt": "2024-08-15T10:30:00.000Z",
+    "status": "active"
+  },
+  {
+    "id": "8",
+    "studentId": "69000005",
+    "subjectId": "05500001",
+    "registeredAt": "2024-08-15T10:35:00.000Z",
+    "status": "active"
+  }
+]

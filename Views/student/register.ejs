@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบลงทะเบียนเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">📚 ระบบลงทะเบียนเรียน</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">สวัสดี, <%= user.fullName %> (<%= user.role %>)</span>
+                <a class="btn btn-outline-light btn-sm" href="/logout">ออกจากระบบ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h6>📋 เมนูนักเรียน</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="/dashboard" class="list-group-item list-group-item-action">
+                            🏠 หน้าหลัก
+                        </a>
+                        <a href="/student/profile" class="list-group-item list-group-item-action">
+                            👤 ข้อมูลส่วนตัว
+                        </a>
+                        <a href="/student/register" class="list-group-item list-group-item-action active">
+                            📝 ลงทะเบียนเรียน
+                        </a>
+                        <a href="/student/grades" class="list-group-item list-group-item-action">
+                            📊 ผลการเรียน
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📝 <%= title %></h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <p><strong>รหัสนักเรียน:</strong> <%= student.studentId %></p>
+                                <p><strong>ชื่อ-นามสกุล:</strong> <%= student.fullName %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>หลักสูตร:</strong> <%= student.curriculumId %></p>
+                                <p><strong>หน่วยกิตที่ลงทะเบียน:</strong> 
+                                    <span class="badge bg-info"><%= totalCredits %>/22 หน่วยกิต</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>🔍 วิชาที่สามารถลงทะเบียนได้</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัสวิชา</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>หน่วยกิต</th>
+                                                <th>การดำเนินการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (availableSubjects.length === 0) { %>
+                                                <tr>
+                                                    <td colspan="4" class="text-center text-muted">
+                                                        ไม่มีวิชาที่สามารถลงทะเบียนได้
+                                                    </td>
+                                                </tr>
+                                            <% } else { %>
+                                                <% availableSubjects.forEach(subject => { %>
+                                                    <tr>
+                                                        <td><%= subject.subjectId %></td>
+                                                        <td><%= subject.subjectName %></td>
+                                                        <td><%= subject.credits %></td>
+                                                        <td>
+                                                            <% if (totalCredits + subject.credits <= maxCredits) { %>
+                                                                <button class="btn btn-sm btn-success" 
+                                                                        onclick="registerSubject('<%= subject.subjectId %>')">
+                                                                    ลงทะเบียน
+                                                                </button>
+                                                            <% } else { %>
+                                                                <small class="text-muted">เกินหน่วยกิต</small>
+                                                            <% } %>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <h6>✅ วิชาที่ลงทะเบียนแล้ว</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัสวิชา</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>หน่วยกิต</th>
+                                                <th>การดำเนินการ</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% if (registeredSubjects.length === 0) { %>
+                                                <tr>
+                                                    <td colspan="4" class="text-center text-muted">
+                                                        ยังไม่ได้ลงทะเบียนวิชาใดๆ
+                                                    </td>
+                                                </tr>
+                                            <% } else { %>
+                                                <% registeredSubjects.forEach(reg => { %>
+                                                    <tr>
+                                                        <td><%= reg.subjectId %></td>
+                                                        <td><%= reg.subjectName %></td>
+                                                        <td><%= reg.credits %></td>
+                                                        <td>
+                                                            <button class="btn btn-sm btn-danger" 
+                                                                    onclick="cancelSubject('<%= reg.subjectId %>')">
+                                                                ยกเลิก
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                <% }); %>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 ระบบลงทะเบียนเรียน - MVC Architecture By 66050846</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function registerSubject(subjectId) {
+            if (confirm('ต้องการลงทะเบียนวิชานี้หรือไม่?')) {
+                fetch('/student/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `subjectId=${subjectId}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('เกิดข้อผิดพลาด: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาดในการเชื่อมต่อ');
+                });
+            }
+        }
+
+        function cancelSubject(subjectId) {
+            if (confirm('ต้องการยกเลิกการลงทะเบียนวิชานี้หรือไม่?')) {
+                fetch('/student/cancel', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `subjectId=${subjectId}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert('เกิดข้อผิดพลาด: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('เกิดข้อผิดพลาดในการเชื่อมต่อ');
+                });
+            }
+        }
+    </script>
+</body>
+</html>

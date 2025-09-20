@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบจัดการนักเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">
+                                <i class="bi bi-house-door"></i>
+                                แดชบอร์ด
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/students">
+                                <i class="bi bi-people"></i>
+                                จัดการนักเรียน
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/subjects">
+                                <i class="bi bi-book"></i>
+                                จัดการวิชาเรียน
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/grades">
+                                <i class="bi bi-award"></i>
+                                จัดการเกรด
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-3">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><%= title %></h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/grades" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> กลับ
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Alert messages -->
+                <% if (error) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+
+                <!-- Student Info Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">ข้อมูลนักเรียน</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>รหัสนักเรียน:</strong> <%= student.studentId %></p>
+                                <p><strong>ชื่อ-นามสกุล:</strong> <%= student.firstName %> <%= student.lastName %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>โรงเรียน:</strong> <%= student.school %></p>
+                                <p><strong>หลักสูตร:</strong> <%= student.curriculumId %></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Grade Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">เพิ่มเกรดสำหรับนักเรียน</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/admin/grades/add/<%= student.studentId %>">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="subjectId" class="form-label">เลือกวิชา <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="subjectId" name="subjectId" required>
+                                            <option value="">-- เลือกวิชา --</option>
+                                            <% registeredSubjects.forEach(regSubject => { %>
+                                                <% const subject = subjects.find(s => s.subjectId === regSubject.subjectId); %>
+                                                <% if (subject) { %>
+                                                    <option value="<%= subject.subjectId %>">
+                                                        <%= subject.subjectName %> (<%= subject.subjectId %>)
+                                                    </option>
+                                                <% } %>
+                                            <% }); %>
+                                        </select>
+                                        <div class="form-text">แสดงเฉพาะวิชาที่นักเรียนลงทะเบียนแล้ว</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="grade" class="form-label">เกรด <span class="text-danger">*</span></label>
+                                        <select class="form-select" id="grade" name="grade" required>
+                                            <option value="">-- เลือกเกรด --</option>
+                                            <option value="A">A</option>
+                                            <option value="B+">B+</option>
+                                            <option value="B">B</option>
+                                            <option value="C+">C+</option>
+                                            <option value="C">C</option>
+                                            <option value="D+">D+</option>
+                                            <option value="D">D</option>
+                                            <option value="F">F</option>
+                                            <option value="I">I (ไม่สมบูรณ์)</option>
+                                            <option value="W">W (ถอน)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <% if (registeredSubjects.length === 0) { %>
+                                <div class="alert alert-warning">
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                    นักเรียนยังไม่ได้ลงทะเบียนวิชาใดๆ กรุณาให้นักเรียนลงทะเบียนวิชาก่อน
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/admin/grades" class="btn btn-secondary">
+                                        <i class="bi bi-arrow-left"></i> กลับ
+                                    </a>
+                                </div>
+                            <% } else { %>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <a href="/admin/grades" class="btn btn-secondary me-md-2">
+                                        <i class="bi bi-x-circle"></i> ยกเลิก
+                                    </a>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-check-circle"></i> เพิ่มเกรด
+                                    </button>
+                                </div>
+                            <% } %>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Registered Subjects Info -->
+                <% if (registeredSubjects.length > 0) { %>
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            <h6 class="mb-0">วิชาที่ลงทะเบียน</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>รหัสวิชา</th>
+                                            <th>ชื่อวิชา</th>
+                                            <th>หน่วยกิต</th>
+                                            <th>สถานะเกรด</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% registeredSubjects.forEach(regSubject => { %>
+                                            <% const subject = subjects.find(s => s.subjectId === regSubject.subjectId); %>
+                                            <tr>
+                                                <td><%= regSubject.subjectId %></td>
+                                                <td>
+                                                    <% if (subject) { %>
+                                                        <%= subject.subjectName %>
+                                                    <% } else { %>
+                                                        <span class="text-danger">ไม่พบข้อมูลวิชา</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% if (subject) { %>
+                                                        <%= subject.credits %>
+                                                    <% } else { %>
+                                                        -
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-warning">ยังไม่มีเกรด</span>
+                                                </td>
+                                            </tr>
+                                        <% }); %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

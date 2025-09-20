@@ -1,0 +1,102 @@
+[
+  {
+    "studentId": "69000001",
+    "title": "นาย",
+    "firstName": "ชัยวัฒน์",
+    "lastName": "พงศ์สุระ",
+    "birthDate": "2008-05-15",
+    "school": "สังคมสงเคราะห์",
+    "email": "chaiwat.p@kmitl.ac.th",
+    "curriculumId": "12345678"
+  },
+  {
+    "studentId": "69000002",
+    "title": "นางสาว",
+    "firstName": "สุภาพร",
+    "lastName": "วงศ์ศรี",
+    "birthDate": "2008-03-22",
+    "school": "โรงเรียนเทคโนโลยีการเกษตร",
+    "email": "supaporn.w@kmitl.ac.th",
+    "curriculumId": "12345678"
+  },
+  {
+    "studentId": "69000003",
+    "title": "นาย",
+    "firstName": "กิตติศักดิ์",
+    "lastName": "ใจดี",
+    "birthDate": "2008-07-10",
+    "school": "สจล(สวยจังเลย)",
+    "email": "kittisak.j@kmitl.ac.th",
+    "curriculumId": "87654321"
+  },
+  {
+    "studentId": "69000004",
+    "title": "นางสาว",
+    "firstName": "ปิยะนุช",
+    "lastName": "รักษ์ดี",
+    "birthDate": "2008-12-03",
+    "school": "สจล(สวยจังเลย)",
+    "email": "piyanuch.r@kmitl.ac.th",
+    "curriculumId": "12345678"
+  },
+  {
+    "studentId": "69000005",
+    "title": "นาย",
+    "firstName": "วีรชัย",
+    "lastName": "ศรีสุข",
+    "birthDate": "2008-09-18",
+    "school": "สจล(สวยจังเลย)",
+    "email": "veerachai.s@kmitl.ac.th",
+    "curriculumId": "87654321"
+  },
+  {
+    "studentId": "69000006",
+    "title": "นางสาว",
+    "firstName": "นิภาพร",
+    "lastName": "บุญมา",
+    "birthDate": "2008-04-25",
+    "school": "สจล(สวยจังเลย)",
+    "email": "nipaporn.b@kmitl.ac.th",
+    "curriculumId": "12345678"
+  },
+  {
+    "studentId": "69000007",
+    "title": "นาย",
+    "firstName": "อนุชา",
+    "lastName": "ทองคำ",
+    "birthDate": "2008-11-12",
+    "school": "สจล(สวยจังเลย)",
+    "email": "anucha.t@kmitl.ac.th",
+    "curriculumId": "87654321"
+  },
+  {
+    "studentId": "69000008",
+    "title": "นางสาว",
+    "firstName": "วรรณพร",
+    "lastName": "สีดา",
+    "birthDate": "2008-06-08",
+    "school": "สจล(สวยจังเลย)",
+    "email": "wannaporn.s@kmitl.ac.th",
+    "curriculumId": "12345678"
+  },
+  {
+    "studentId": "69000009",
+    "title": "นาย",
+    "firstName": "ธนพล",
+    "lastName": "เมืองมูล",
+    "birthDate": "2008-01-30",
+    "school": "สจล(สวยจังเลย)",
+    "email": "thanapol.m@kmitl.ac.th",
+    "curriculumId": "87654321"
+  },
+  {
+    "studentId": "69000222",
+    "title": "นาย",
+    "firstName": "Test",
+    "lastName": "Test",
+    "birthDate": "2025-09-18",
+    "school": "Test",
+    "email": "prasopchai@gmail.com",
+    "curriculumId": "12345678"
+  }
+]

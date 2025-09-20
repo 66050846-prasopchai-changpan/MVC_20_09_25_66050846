@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบลงทะเบียนเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Sarabun', sans-serif;
+        }
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .btn {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="bi bi-gear-fill me-2"></i>
+                ระบบจัดการข้อมูล
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="bi bi-house-fill"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/students">
+                            <i class="bi bi-people-fill"></i> จัดการนักเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/subjects">
+                            <i class="bi bi-book-fill"></i> จัดการวิชาเรียน
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <%= user.fullName %>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard">
+                                <i class="bi bi-house"></i> ไปหน้าหลัก
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1 class="text-center mb-4">
+                        <i class="bi bi-speedometer2 text-primary"></i>
+                        แดชบอร์ดผู้ดูแลระบบ
+                    </h1>
+                </div>
+            </div>
+
+            <!-- สถิติรวม -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="mb-0"><%= studentCount %></h3>
+                                <p class="mb-0">นักเรียนทั้งหมด</p>
+                            </div>
+                            <i class="bi bi-people-fill display-4"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="mb-0"><%= subjectCount %></h3>
+                                <p class="mb-0">วิชาเรียนทั้งหมด</p>
+                            </div>
+                            <i class="bi bi-book-fill display-4"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h3 class="mb-0"><%= userStats.admin %></h3>
+                                <p class="mb-0">ผู้ดูแลระบบ</p>
+                            </div>
+                            <i class="bi bi-shield-fill display-4"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- เมนูหลัก -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-people-fill display-1 text-primary mb-3"></i>
+                            <h4 class="card-title">จัดการข้อมูลนักเรียน</h4>
+                            <p class="card-text">เพิ่ม แก้ไข ลบ และจัดการข้อมูลนักเรียนในระบบ</p>
+                            <a href="/admin/students" class="btn btn-primary btn-lg">
+                                <i class="bi bi-arrow-right-circle"></i> เข้าสู่หน้าจัดการ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-book-fill display-1 text-success mb-3"></i>
+                            <h4 class="card-title">จัดการวิชาเรียน</h4>
+                            <p class="card-text">เพิ่ม แก้ไข ลบ และจัดการวิชาเรียนในระบบ</p>
+                            <a href="/admin/subjects" class="btn btn-success btn-lg">
+                                <i class="bi bi-arrow-right-circle"></i> เข้าสู่หน้าจัดการ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body text-center">
+                            <i class="bi bi-award-fill display-1 text-warning mb-3"></i>
+                            <h4 class="card-title">จัดการเกรดนักเรียน</h4>
+                            <p class="card-text">เพิ่ม แก้ไข ลบ และจัดการเกรดของนักเรียน</p>
+                            <a href="/admin/grades" class="btn btn-warning btn-lg">
+                                <i class="bi bi-arrow-right-circle"></i> เข้าสู่หน้าจัดการ
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ข้อมูลล่าสุด -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-people"></i> นักเรียนล่าสุด
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <% if (allStudents && allStudents.length > 0) { %>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัส</th>
+                                                <th>ชื่อ-สกุล</th>
+                                                <th>อีเมล</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% allStudents.forEach(student => { %>
+                                                <tr>
+                                                    <td><%= student.studentId %></td>
+                                                    <td><%= student.firstName %> <%= student.lastName %></td>
+                                                    <td><%= student.email %></td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <a href="/admin/students" class="btn btn-sm btn-outline-primary">
+                                        ดูทั้งหมด <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted text-center">ยังไม่มีข้อมูลนักเรียน</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">
+                                <i class="bi bi-book"></i> วิชาเรียนล่าสุด
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <% if (allSubjects && allSubjects.length > 0) { %>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>รหัสวิชา</th>
+                                                <th>ชื่อวิชา</th>
+                                                <th>หน่วยกิต</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <% allSubjects.forEach(subject => { %>
+                                                <tr>
+                                                    <td><%= subject.subjectId %></td>
+                                                    <td><%= subject.subjectName %></td>
+                                                    <td><%= subject.credits %></td>
+                                                </tr>
+                                            <% }); %>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="text-center">
+                                    <a href="/admin/subjects" class="btn btn-sm btn-outline-success">
+                                        ดูทั้งหมด <i class="bi bi-arrow-right"></i>
+                                    </a>
+                                </div>
+                            <% } else { %>
+                                <p class="text-muted text-center">ยังไม่มีข้อมูลวิชาเรียน</p>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

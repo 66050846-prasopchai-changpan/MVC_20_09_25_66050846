@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบลงทะเบียนเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Sarabun', sans-serif;
+        }
+        .main-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin: 2rem 0;
+            padding: 2rem;
+        }
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .card {
+            border-radius: 15px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            border-radius: 10px;
+        }
+        .form-control, .form-select {
+            border-radius: 10px;
+        }
+        .alert {
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="bi bi-gear-fill me-2"></i>
+                ระบบจัดการข้อมูล
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="bi bi-house-fill"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/students">
+                            <i class="bi bi-people-fill"></i> จัดการนักเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/subjects">
+                            <i class="bi bi-book-fill"></i> จัดการวิชาเรียน
+                        </a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <%= user.fullName %>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/dashboard">
+                                <i class="bi bi-house"></i> ไปหน้าหลัก
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="main-content">
+            <div class="row mb-4">
+                <div class="col-12">
+                    <h1 class="text-center mb-4">
+                        <i class="bi bi-book-half text-success"></i>
+                        <%= title %>
+                    </h1>
+                </div>
+            </div>
+
+            <!-- แสดงข้อความผิดพลาด -->
+            <% if (error) { %>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <i class="bi bi-exclamation-triangle-fill"></i> <%= error %>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            <% } %>
+
+            <!-- ปุ่มย้อนกลับ -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <a href="/admin/subjects" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left"></i> ย้อนกลับ
+                    </a>
+                </div>
+            </div>
+
+            <!-- ฟอร์มเพิ่มวิชา -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-book-half"></i> ข้อมูลวิชาใหม่
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="/admin/subjects/add">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="subjectId" class="form-label">
+                                    <i class="bi bi-hash"></i> รหัสวิชา *
+                                </label>
+                    <input type="text" 
+                        class="form-control" 
+                        id="subjectId" 
+                        name="subjectId" 
+                        placeholder="เช่น 05501234 หรือ 90691234"
+                        required>
+                                <div class="form-text">รหัสวิชาต้องไม่ซ้ำกับวิชาที่มีอยู่แล้ว</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="credits" class="form-label">
+                                    <i class="bi bi-award"></i> หน่วยกิต *
+                                </label>
+                                <select class="form-select" id="credits" name="credits" required>
+                                    <option value="">เลือกหน่วยกิต</option>
+                                    <option value="1">1 หน่วยกิต</option>
+                                    <option value="2">2 หน่วยกิต</option>
+                                    <option value="3">3 หน่วยกิต</option>
+                                    <option value="4">4 หน่วยกิต</option>
+                                    <option value="5">5 หน่วยกิต</option>
+                                    <option value="6">6 หน่วยกิต</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="subjectName" class="form-label">
+                                    <i class="bi bi-book"></i> ชื่อวิชา *
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="subjectName" 
+                                       name="subjectName" 
+                                       placeholder="ชื่ออย่างเต็มของวิชา"
+                                       required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="instructor" class="form-label">
+                                    <i class="bi bi-person-workspace"></i> อาจารย์ผู้สอน *
+                                </label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="instructor" 
+                                       name="instructor" 
+                                       placeholder="ชื่อ-นามสกุล อาจารย์ผู้สอน"
+                                       required>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="prerequisiteId" class="form-label">
+                                    <i class="bi bi-arrow-down-up"></i> วิชาพื้นฐาน (ถ้ามี)
+                                </label>
+                                <select class="form-select" id="prerequisiteId" name="prerequisiteId">
+                                    <option value="">ไม่มีวิชาพื้นฐาน</option>
+                                    <% if (allSubjects && allSubjects.length > 0) { %>
+                                        <% allSubjects.forEach(subject => { %>
+                                            <option value="<%= subject.subjectId %>">
+                                                <%= subject.subjectId %> - <%= subject.subjectName %>
+                                            </option>
+                                        <% }); %>
+                                    <% } %>
+                                </select>
+                                <div class="form-text">เลือกวิชาที่นักเรียนต้องผ่านก่อนลงทะเบียนวิชานี้</div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i>
+                                    <strong>หมายเหตุ:</strong> กรุณาตรวจสอบข้อมูลให้ถูกต้องก่อนเพิ่มวิชา 
+                                    เนื่องจากการเปลี่ยนแปลงข้อมูลหลังจากนักเรียนลงทะเบียนแล้วอาจส่งผลกระทบต่อระบบ
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-12 d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/admin/subjects" class="btn btn-secondary me-md-2">
+                                    <i class="bi bi-x-circle"></i> ยกเลิก
+                                </a>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="bi bi-check-circle"></i> เพิ่มวิชา
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

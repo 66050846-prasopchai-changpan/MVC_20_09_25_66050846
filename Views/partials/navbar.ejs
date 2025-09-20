@@ -1,0 +1,92 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-mortarboard-fill"></i>
+            ระบบจัดการนักเรียน
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <% if (user && user.role === 'admin') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="bi bi-speedometer2"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/students">
+                            <i class="bi bi-people"></i> จัดการนักเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/subjects">
+                            <i class="bi bi-book"></i> จัดการวิชาเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/grades">
+                            <i class="bi bi-award"></i> จัดการเกรด
+                        </a>
+                    </li>
+                <% } else if (user && user.role === 'teacher') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/dashboard">
+                            <i class="bi bi-speedometer2"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/teacher/students">
+                            <i class="bi bi-people"></i> นักเรียน
+                        </a>
+                    </li>
+                <% } else if (user && user.role === 'student') { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/dashboard">
+                            <i class="bi bi-speedometer2"></i> แดชบอร์ด
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/subjects">
+                            <i class="bi bi-book"></i> ลงทะเบียนเรียน
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/student/grades">
+                            <i class="bi bi-award"></i> ผลการเรียน
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+            
+            <ul class="navbar-nav">
+                <% if (user) { %>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                            <i class="bi bi-person-circle"></i> <%= user.fullName || user.username %>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><h6 class="dropdown-header">บัญชีผู้ใช้</h6></li>
+                            <li><a class="dropdown-item" href="/profile">
+                                <i class="bi bi-person"></i> ข้อมูลส่วนตัว
+                            </a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/logout">
+                                <i class="bi bi-box-arrow-right"></i> ออกจากระบบ
+                            </a></li>
+                        </ul>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">
+                            <i class="bi bi-box-arrow-in-right"></i> เข้าสู่ระบบ
+                        </a>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+    </div>
+</nav>

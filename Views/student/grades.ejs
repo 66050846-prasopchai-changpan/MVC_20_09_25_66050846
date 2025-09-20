@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบลงทะเบียนเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="/">📚 ระบบลงทะเบียนเรียน</a>
+            <div class="navbar-nav ms-auto">
+                <span class="navbar-text me-3">สวัสดี, <%= user.fullName %> (<%= user.role %>)</span>
+                <a class="btn btn-outline-light btn-sm" href="/logout">ออกจากระบบ</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h6>📋 เมนูนักเรียน</h6>
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="/dashboard" class="list-group-item list-group-item-action">
+                            🏠 หน้าหลัก
+                        </a>
+                        <a href="/student/profile" class="list-group-item list-group-item-action">
+                            👤 ข้อมูลส่วนตัว
+                        </a>
+                        <a href="/student/register" class="list-group-item list-group-item-action">
+                            📝 ลงทะเบียนเรียน
+                        </a>
+                        <a href="/student/grades" class="list-group-item list-group-item-action active">
+                            📊 ผลการเรียน
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>📊 ผลการเรียน</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- สรุปผลการเรียน -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white">
+                                    <div class="card-body text-center">
+                                        <h4><%= totalCredits %></h4>
+                                        <small>หน่วยกิตรวม</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white">
+                                    <div class="card-body text-center">
+                                        <h4><%= gpa.toFixed(2) %></h4>
+                                        <small>เกรดเฉลี่ย (GPA)</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-info text-white">
+                                    <div class="card-body text-center">
+                                        <h4><%= registeredSubjects.length %></h4>
+                                        <small>วิชาที่เรียน</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-white">
+                                    <div class="card-body text-center">
+                                        <h4><%= student.year %></h4>
+                                        <small>ชั้นปี</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ตารางผลการเรียน -->
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th>รหัสวิชา</th>
+                                        <th>ชื่อวิชา</th>
+                                        <th>หน่วยกิต</th>
+                                        <th>อาจารย์ผู้สอน</th>
+                                        <th>เกรด</th>
+                                        <th>คะแนน</th>
+                                        <th>วันที่ลงทะเบียน</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% if (registeredSubjects.length === 0) { %>
+                                        <tr>
+                                            <td colspan="7" class="text-center text-muted">
+                                                ยังไม่มีผลการเรียน
+                                            </td>
+                                        </tr>
+                                    <% } else { %>
+                                        <% registeredSubjects.forEach(reg => { %>
+                                            <tr>
+                                                <td><%= reg.subjectId %></td>
+                                                <td><%= reg.subjectName %></td>
+                                                <td><%= reg.credits %></td>
+                                                <td><%= reg.instructor || 'ไม่ระบุ' %></td>
+                                                <td>
+                                                    <% if (reg.grade) { %>
+                                                        <% const gradeClass = getGradeClass(reg.grade); %>
+                                                        <span class="badge <%= gradeClass %>"><%= reg.grade %></span>
+                                                    <% } else { %>
+                                                        <span class="badge bg-secondary">ไม่มีเกรด</span>
+                                                    <% } %>
+                                                </td>
+                                                <td>
+                                                    <% if (reg.grade) { %>
+                                                        <%= getGradePoint(reg.grade) %>
+                                                    <% } else { %>
+                                                        -
+                                                    <% } %>
+                                                </td>
+                                                <td><%= new Date(reg.registrationDate).toLocaleDateString('th-TH') %></td>
+                                            </tr>
+                                        <% }); %>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <% if (registeredSubjects.length > 0) { %>
+                            <!-- สรุปสถิติ -->
+                            <div class="row mt-4">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>📈 สถิติเกรด</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด A:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats.A || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด B+:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats['B+'] || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด B:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats.B || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด C+:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats['C+'] || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด C:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats.C || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด D+:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats['D+'] || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด D:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats.D || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <strong>เกรด F:</strong>
+                                                </div>
+                                                <div class="col-6">
+                                                    <%= gradeStats.F || 0 %> วิชา
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6>🎯 เป้าหมายการเรียน</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="progress mb-3">
+                                                <div class="progress-bar" role="progressbar" 
+                                                     style="width: <%= (totalCredits / 120 * 100).toFixed(1) %>%"
+                                                     aria-valuenow="<%= totalCredits %>" 
+                                                     aria-valuemin="0" aria-valuemax="120">
+                                                    <%= (totalCredits / 120 * 100).toFixed(1) %>%
+                                                </div>
+                                            </div>
+                                            <p><strong>ความคืบหน้า:</strong> <%= totalCredits %> / 120 หน่วยกิต</p>
+                                            <p><strong>เกรดเฉลี่ย:</strong> <%= gpa.toFixed(2) %> / 4.00</p>
+                                            <% if (gpa >= 3.50) { %>
+                                                <div class="alert alert-success">
+                                                    🏆 ยินดีด้วย! ผลการเรียนอยู่ในเกณฑ์ดีเยี่ยม
+                                                </div>
+                                            <% } else if (gpa >= 3.00) { %>
+                                                <div class="alert alert-info">
+                                                    👍 ผลการเรียนอยู่ในเกณฑ์ดี
+                                                </div>
+                                            <% } else if (gpa >= 2.50) { %>
+                                                <div class="alert alert-warning">
+                                                    ⚠️ ควรพยายามเพิ่มผลการเรียนให้ดีขึ้น
+                                                </div>
+                                            <% } else { %>
+                                                <div class="alert alert-danger">
+                                                    ❌ ต้องปรับปรุงผลการเรียนด่วน
+                                                </div>
+                                            <% } %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-light text-center py-3 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2025 ระบบลงทะเบียนเรียน - MVC Architecture By 66050846</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function getGradeClass(grade) {
+            switch(grade) {
+                case 'A': return 'bg-success';
+                case 'B+': return 'bg-info';
+                case 'B': return 'bg-primary';
+                case 'C+': return 'bg-warning';
+                case 'C': return 'bg-secondary';
+                case 'D+': return 'bg-warning';
+                case 'D': return 'bg-danger';
+                case 'F': return 'bg-danger';
+                default: return 'bg-secondary';
+            }
+        }
+
+        function getGradePoint(grade) {
+            switch(grade) {
+                case 'A': return '4.0';
+                case 'B+': return '3.5';
+                case 'B': return '3.0';
+                case 'C+': return '2.5';
+                case 'C': return '2.0';
+                case 'D+': return '1.5';
+                case 'D': return '1.0';
+                case 'F': return '0.0';
+                default: return '-';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - ระบบจัดการนักเรียน</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+                <div class="position-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/dashboard">
+                                <i class="bi bi-house-door"></i>
+                                แดชบอร์ด
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/students">
+                                <i class="bi bi-people"></i>
+                                จัดการนักเรียน
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/subjects">
+                                <i class="bi bi-book"></i>
+                                จัดการวิชาเรียน
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/admin/grades">
+                                <i class="bi bi-award"></i>
+                                จัดการเกรด
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Main content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-3">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2"><%= title %></h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <a href="/admin/grades" class="btn btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> กลับ
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Alert messages -->
+                <% if (error) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+
+                <!-- Student and Subject Info Card -->
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">ข้อมูลการแก้ไขเกรด</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-primary">ข้อมูลนักเรียน</h6>
+                                <p><strong>รหัสนักเรียน:</strong> <%= student.studentId %></p>
+                                <p><strong>ชื่อ-นามสกุล:</strong> <%= student.firstName %> <%= student.lastName %></p>
+                                <p><strong>โรงเรียน:</strong> <%= student.school %></p>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-success">ข้อมูลวิชา</h6>
+                                <p><strong>รหัสวิชา:</strong> <%= subject.subjectId %></p>
+                                <p><strong>ชื่อวิชา:</strong> <%= subject.subjectName %></p>
+                                <p><strong>หน่วยกิต:</strong> <%= subject.credits %></p>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="alert alert-info">
+                                    <i class="bi bi-info-circle"></i>
+                                    <strong>เกรดปัจจุบัน:</strong> 
+                                    <% if (currentGrade) { %>
+                                        <span class="badge bg-primary fs-6"><%= currentGrade %></span>
+                                    <% } else { %>
+                                        <span class="text-muted">ไม่มีเกรด</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Grade Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">แก้ไขเกรด</h5>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="/admin/grades/edit/<%= student.studentId %>/<%= subject.subjectId %>">
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <div class="mb-3">
+                                        <label for="grade" class="form-label">เกรดใหม่ <span class="text-danger">*</span></label>
+                                        <select class="form-select form-select-lg" id="grade" name="grade" required>
+                                            <option value="">-- เลือกเกรด --</option>
+                                            <option value="A" <%= currentGrade === 'A' ? 'selected' : '' %>>A</option>
+                                            <option value="B+" <%= currentGrade === 'B+' ? 'selected' : '' %>>B+</option>
+                                            <option value="B" <%= currentGrade === 'B' ? 'selected' : '' %>>B</option>
+                                            <option value="C+" <%= currentGrade === 'C+' ? 'selected' : '' %>>C+</option>
+                                            <option value="C" <%= currentGrade === 'C' ? 'selected' : '' %>>C</option>
+                                            <option value="D+" <%= currentGrade === 'D+' ? 'selected' : '' %>>D+</option>
+                                            <option value="D" <%= currentGrade === 'D' ? 'selected' : '' %>>D</option>
+                                            <option value="F" <%= currentGrade === 'F' ? 'selected' : '' %>>F</option>
+                                            <option value="I" <%= currentGrade === 'I' ? 'selected' : '' %>>I (ไม่สมบูรณ์)</option>
+                                            <option value="W" <%= currentGrade === 'W' ? 'selected' : '' %>>W (ถอน)</option>
+                                        </select>
+                                        <div class="form-text">เลือกเกรดใหม่ที่ต้องการอัปเดต</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                <a href="/admin/grades" class="btn btn-secondary me-md-2">
+                                    <i class="bi bi-x-circle"></i> ยกเลิก
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle"></i> อัปเดตเกรด
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Grade Scale Reference -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h6 class="mb-0">อ้างอิงเกรด</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-success">เกรดปกติ</h6>
+                                <ul class="list-unstyled">
+                                    <li><span class="badge bg-success">A</span> = ดีเยี่ยม (80-100)</li>
+                                    <li><span class="badge bg-success">B+</span> = ดีมาก (75-79)</li>
+                                    <li><span class="badge bg-primary">B</span> = ดี (70-74)</li>
+                                    <li><span class="badge bg-primary">C+</span> = ค่อนข้างดี (65-69)</li>
+                                    <li><span class="badge bg-warning">C</span> = ปานกลาง (60-64)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-warning">เกรดอื่นๆ</h6>
+                                <ul class="list-unstyled">
+                                    <li><span class="badge bg-warning">D+</span> = อ่อน (55-59)</li>
+                                    <li><span class="badge bg-warning">D</span> = อ่อนมาก (50-54)</li>
+                                    <li><span class="badge bg-danger">F</span> = ตก (0-49)</li>
+                                    <li><span class="badge bg-secondary">I</span> = ไม่สมบูรณ์</li>
+                                    <li><span class="badge bg-secondary">W</span> = ถอน</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Highlight selected grade
+        document.getElementById('grade').addEventListener('change', function() {
+            const selectedGrade = this.value;
+            if (selectedGrade) {
+                this.classList.remove('is-invalid');
+                this.classList.add('is-valid');
+            } else {
+                this.classList.remove('is-valid');
+            }
+        });
+
+        // Auto-focus on grade select
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('grade').focus();
+        });
+    </script>
+</body>
+</html>

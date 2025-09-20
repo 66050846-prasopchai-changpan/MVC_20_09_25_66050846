@@ -1,0 +1,65 @@
+[
+  {
+    "studentId": "69000001",
+    "subjectId": "05500001",
+    "registrationDate": "2024-08-15T10:00:00.000Z",
+    "grade": "A"
+  },
+  {
+    "studentId": "69000001",
+    "subjectId": "90690001",
+    "registrationDate": "2024-08-15T10:05:00.000Z",
+    "grade": "B+"
+  },
+  {
+    "studentId": "69000001",
+    "subjectId": "90690002",
+    "registrationDate": "2024-08-15T10:10:00.000Z",
+    "grade": "A"
+  },
+  {
+    "studentId": "69000002",
+    "subjectId": "05500001",
+    "registrationDate": "2024-08-15T11:00:00.000Z",
+    "grade": "B"
+  },
+  {
+    "studentId": "69000002",
+    "subjectId": "90690001",
+    "registrationDate": "2024-08-15T11:05:00.000Z",
+    "grade": "A"
+  },
+  {
+    "studentId": "69000003",
+    "subjectId": "05500001",
+    "registrationDate": "2024-08-16T09:00:00.000Z",
+    "grade": "A"
+  },
+  {
+    "studentId": "69000003",
+    "subjectId": "90690002",
+    "registrationDate": "2024-08-16T09:05:00.000Z"
+  },
+  {
+    "studentId": "69000004",
+    "subjectId": "05500001",
+    "registrationDate": "2024-08-16T14:00:00.000Z"
+  },
+  {
+    "studentId": "69000004",
+    "subjectId": "90690001",
+    "registrationDate": "2024-08-16T14:05:00.000Z"
+  },
+  {
+    "studentId": "69000005",
+    "subjectId": "05500001",
+    "registrationDate": "2024-08-17T08:00:00.000Z",
+    "grade": "B+"
+  },
+  {
+    "studentId": "69000001",
+    "subjectId": "05500002",
+    "registrationDate": "2025-09-20T06:48:54.855Z",
+    "grade": "C"
+  }
+]
